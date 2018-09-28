@@ -1,23 +1,20 @@
 module.exports = function getZerosCount(number, base) {
   const arr = [];
-
   let newBase = base;
   let i = 2;
 
   while(newBase > 1) {
     if (newBase % i === 0) {
-	  newBase /= i;
-	  arr.push(i);
+      newBase /= i;
+      arr.push(i);
     } else i++;
   }
 
-  let uniqueVal = [];
-  let uniqueNum = [];
-  let prev;
+  const uniqueVal = [];
+  const uniqueNum = [];
+  let prev = '';
 
-  arr.sort();
-
-  for (let i = 0; i < arr.length; i++) {
+  for (let i = 0, length = arr.length; i < length; i++) {
     if ( arr[i] !== prev ) {
       uniqueVal.push(arr[i]);
       uniqueNum.push(1);
@@ -28,25 +25,23 @@ module.exports = function getZerosCount(number, base) {
     prev = arr[i];
   }
 
-  let count = [];
+  const count = [];
   
-  for (let i = 0; i < uniqueVal.length; i++) {
-  	let pow = 2;
+  for (let i = 0, length = uniqueVal.length; i < length; i++) {
+    let pow = 2;
     let sortPow = uniqueVal[i];
     count[i] = 0;
 
     while ((number - sortPow) > 0) {
-
       count[i] += Math.floor(number / sortPow);
-  	  sortPow = Math.pow(uniqueVal[i], pow);
-  	  pow++;
-
+      sortPow = Math.pow(uniqueVal[i], pow);
+      pow++;
     }
 
     count[i] = Math.floor(count[i] / uniqueNum[i]);
   }
   
-  count.sort((a,b) => a-b);
+  count.sort((a, b) => a - b);
   
   return count[0];
 }
